@@ -165,7 +165,7 @@ class Github implements ProviderInterface{
 		$oauth->username = $userData['username'];
 		$oauth->uid = $userData['uid'];
 		$oauth->location = $userData['location'];
-		$oauth->url = $userData['access_token'];
+		$oauth->url = $userData['url'];
 
 		if(!is_array($scope))
 		{
