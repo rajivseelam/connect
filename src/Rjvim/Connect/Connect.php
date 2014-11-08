@@ -2,6 +2,7 @@
 
 use Config;
 use Request;
+use Response;
 use Redirect;
 use Google_Client;
 
@@ -55,6 +56,11 @@ class Connect {
 
 		//Then log in a user
 		$this->sentry->login($user);
+
+		if(Config::get('connect::ajax'))
+		{
+			return Response::json('success',200);
+		}
 
 		return Redirect::route(Config::get('connect::route'));
 	}
