@@ -4,6 +4,8 @@ return array(
 
     'route' => 'profile',
 
+    'ajax' => false,
+
     'google' => array(
 
         'clients' => array(
@@ -43,6 +45,29 @@ return array(
 
             'default' => array(
                 "user:email"
+            ),
+
+        ),
+
+    ),
+
+    'facebook' => array(
+
+        'clients' => array(
+
+            'default' => array(
+                'client_id' => 'XXXXXXXXXXXXXX',
+                'client_secret' => 'XXXXXXXXXXXXXXXXXXXX',
+                'redirect_uri' => 'XXXXXXXXXXXXXXXXXXX',
+            ),
+        ),
+
+        'scopes' => array(
+
+            'default' => array(
+                'email',
+                'public_profile',
+                'user_friends'
             ),
 
         ),

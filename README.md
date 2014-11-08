@@ -2,12 +2,11 @@
 
 Add to dependencies
 
-	"cartalyst/sentry": "2.1.*",
-	"google/apiclient": "1.0.4-beta",
-	"knplabs/github-api": "1.2.*",
-	"facebook/php-sdk-v4": "4.0.*",
-	"league/oauth2-client": "~0.3"
-
+    "cartalyst/sentry": "2.1.*",
+    "google/apiclient": "1.0.*@beta",
+    "knplabs/github-api": "~1.2",
+    "facebook/php-sdk-v4" : "4.0.*",
+    "league/oauth2-client": "~0.3"
 
 
 Add to providers
