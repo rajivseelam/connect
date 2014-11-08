@@ -176,7 +176,15 @@ class Github implements ProviderInterface{
 
 		foreach($scope as $s)
 		{
-			$scopes['github.'.$s] = 1;
+			if(!isset($oauth->scopes['github.'.$s]))
+			{
+				$scopes['github.'.$s] = 1;
+			}
+		}
+
+		foreach($oauth->scopes as $key => $value)
+		{
+			$scopes[$key] = $value;
 		}
 
 		$oauth->scopes = $scopes;

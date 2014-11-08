@@ -196,7 +196,15 @@ class Facebook implements ProviderInterface{
 
 		foreach($scope as $s)
 		{
-			$scopes['facebook.'.$s] = 1;
+			if(!isset($oauth->scopes['facebook.'.$s]))
+			{
+				$scopes['facebook.'.$s] = 1;
+			}
+		}
+
+		foreach($oauth->scopes as $key => $value)
+		{
+			$scopes[$key] = $value;
 		}
 
 		$oauth->scopes = $scopes;
