@@ -188,16 +188,11 @@ class Google implements ProviderInterface{
 
 		foreach($scope as $s)
 		{
-			if(!isset($oauth->scopes['google.'.$s]))
-			{
-				$scopes['google.'.$s] = 1;
-			}
+
+			$scopes['google.'.$s] = 1;
+
 		}
 
-		foreach($oauth->scopes as $key => $value)
-		{
-			$scopes[$key] = $value;
-		}
 
 		$oauth->scopes = $scopes;
 
