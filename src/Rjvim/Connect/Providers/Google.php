@@ -108,7 +108,7 @@ class Google implements ProviderInterface{
 	 **/
 	public function authenticate()
 	{
-		return Redirect::to($this->client->createAuthUrl());
+		return Redirect::to($this->getAuthUrl());
 	}
 
 	/**
@@ -237,6 +237,17 @@ class Google implements ProviderInterface{
 
 
 		return $result;
+	}
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function getAuthUrl()
+	{
+		return $this->client->createAuthUrl();
 	}
 
 

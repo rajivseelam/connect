@@ -61,11 +61,7 @@ class Facebook implements ProviderInterface{
 	 **/
 	public function authenticate()
 	{
-		$config = Config::get('connect::facebook.clients.'.$this->client);
-
-		$helper = new LaravelFacebookRedirectLoginHelper($config['redirect_uri']);
-
-		return Redirect::to($helper->getLoginUrl($this->getScopes()));
+		return Redirect::to($this->getAuthUrl());
 	}
 
 	/**
@@ -210,6 +206,23 @@ class Facebook implements ProviderInterface{
 		return true;
 
 	}
+
+		/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function getAuthUrl()
+	{
+
+		$config = Config::get('connect::facebook.clients.'.$this->client);
+
+		$helper = new LaravelFacebookRedirectLoginHelper($config['redirect_uri']);
+
+		return $helper->getLoginUrl($this->getScopes());
+	}
+
 
 
 }

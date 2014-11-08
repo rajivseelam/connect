@@ -152,5 +152,16 @@ class Connect {
 
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function getAuthUrl($provider,$client = 'default',$scope = 'default', $state = 'default')
+	{
+		$client = new Providers\Google($client,$scope,$state,true);
+	}
+
 
 }

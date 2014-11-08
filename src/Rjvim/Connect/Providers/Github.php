@@ -53,9 +53,9 @@ class Github implements ProviderInterface{
 	 **/
 	public function authenticate()
 	{
-		return Redirect::to($this->client->getAuthorizationUrl());
+		return Redirect::to($this->getAuthUrl());
 	}
-
+	
 	/**
 	 * Find user using sentry methods
 	 *
@@ -236,5 +236,18 @@ class Github implements ProviderInterface{
 
         return json_decode($response);
     }
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function getAuthUrl()
+	{
+
+		return $this->client->getAuthorizationUrl();
+	}
+
 
 }
