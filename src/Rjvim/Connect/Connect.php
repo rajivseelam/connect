@@ -163,5 +163,52 @@ class Connect {
 		$client = new Providers\Google($client,$scope,$state,true);
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function google_client($client = 'default',$scope = 'default', $state = 'default')
+	{
+		$provider = new Providers\Google($client,$scope,$state,true);
 
+		$oauthAccount = $this->sentry->getUser()->googleAccount;
+
+		$gClient = $provider->prepareClient($client,$scope,$state,true);
+
+		$gClient->setAccessToken(unserialize($oauthAccount->signature));
+
+		if($gClient->isAccessTokenExpired())
+		{
+			$gClient->refreshToken($oauthAccount->refresh_token);
+
+			$response = $gClient->getAccessToken();
+
+			$actual_response = $response;
+
+			$response = json_decode($response);
+
+			$oauthAccount->access_token = $response->access_token;
+
+			if(isset($response->refresh_token))
+			{
+				$oauthAccount->refresh_token = $response->refresh_token;
+			}
+
+			if(isset($response->created))
+			{
+				$oauthAccount->created = $response->created;
+			}
+
+			$oauthAccount->expires_in = $response->expires_in;
+
+			$oauthAccount->signature = serialize($actual_response);
+
+			$oauthAccount->save();
+		}
+
+		return $gClient;
+
+	}
 }
