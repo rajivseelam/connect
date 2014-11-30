@@ -176,11 +176,9 @@ class Connect {
 	 * @return void
 	 * @author 
 	 **/
-	public function google_client($client = 'default',$scope = 'default', $state = 'default')
+	public function google_client($oauthAccount, $client = 'default',$scope = 'default', $state = 'default')
 	{
 		$provider = new Providers\Google($client,$scope,$state,true);
-
-		$oauthAccount = $this->sentry->getUser()->googleAccount;
 
 		$gClient = $provider->prepareClient($client,$scope,$state,true);
 
