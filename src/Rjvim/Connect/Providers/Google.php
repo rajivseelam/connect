@@ -202,47 +202,6 @@ class Google implements ProviderInterface{
 	}
 
 	/**
-	 * Get the list of channels list.
-	 *
-	 * You can provide a Id also with the channel
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	public function getChannelsList($channelId = 'mine')
-	{
-		$youtube = new \Google_Service_YouTube($this->client);
-
-		if($channelId == 'mine')
-		{
-
-			/**
-			 * A similar call to
-			 * GET https://www.googleapis.com/youtube/v3/channels?part=contentDetails&mine=true&key={YOUR_API_KEY}
-			 */
-
-			$result = $youtube
-						->channels
-						->listChannels('contentDetails',array('mine' => true))
-						->getItems()[0]
-						->getContentDetails()
-						->getRelatedPlaylists();
-		}
-		else
-		{
-			$result = $youtube
-				->channels
-				->listChannels('contentDetails',array('id' => $channelId))
-				->getItems()[0]
-				->getContentDetails()
-				->getRelatedPlaylists();
-		}
-
-
-		return $result;
-	}
-
-	/**
 	 * undocumented function
 	 *
 	 * @return void

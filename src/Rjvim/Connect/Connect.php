@@ -75,7 +75,14 @@ class Connect {
 	 */
 	public function google($client = 'default',$scope = 'default', $state = 'default')
 	{
-		$provider = new Providers\Google($client,$scope,$state,true);
+		if($state == 'youtube_access')
+		{
+			$provider = new Providers\Youtube($client,$scope,$state,true);
+		}
+		else
+		{
+			$provider = new Providers\Google($client,$scope,$state,true);
+		}
 
 		return $this->handle($provider);
 
