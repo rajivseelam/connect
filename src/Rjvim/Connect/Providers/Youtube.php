@@ -50,7 +50,7 @@ class Youtube extends Google{
 		$result['email'] = $this->sentry->getUser()->email;
 		$result['url'] = $person->getUrl();
 		$result['image'] = $person->getImage()->getUrl();
-		$result['channel'] = $this->getChannelsList()->uploads;
+		$result['channel'] = $this->getChannelId();
 
 		return $result;
 	}
@@ -118,6 +118,24 @@ class Youtube extends Google{
 		$oauth->save();
 
 		return true;
+	}
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function getChannelId($channelId = 'mine')
+	{
+		$youtube = new \Google_Service_YouTube($this->client);
+
+		$result = $youtube
+			->channels
+			->listChannels('contentDetails,snippet',array('mine' => true))
+			->getItems()[0]->getId();
+
+		return $result;
 	}
 
 
