@@ -6,6 +6,10 @@ return array(
 
     'ajax' => false,
 
+    'force' => false,
+
+    'offline' => true,
+
     'google' => array(
 
         'clients' => array(

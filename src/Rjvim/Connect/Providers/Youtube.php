@@ -16,9 +16,9 @@ class Youtube extends Google{
 	 * Constructor for Connect Library
 	 */
 
-	public function __construct($client, $scope, $state = 'default', $force = false)
+	public function __construct($client, $scope, $state = 'default')
 	{
-		parent::__construct($client, $scope, $state, $force);
+		parent::__construct($client, $scope, $state);
 
 		$this->sentry = \App::make('sentry');
 	}

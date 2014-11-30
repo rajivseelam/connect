@@ -77,11 +77,11 @@ class Connect {
 	{
 		if($state == 'youtube_access')
 		{
-			$provider = new Providers\Youtube($client,$scope,$state,true);
+			$provider = new Providers\Youtube($client,$scope,$state);
 		}
 		else
 		{
-			$provider = new Providers\Google($client,$scope,$state,true);
+			$provider = new Providers\Google($client,$scope,$state);
 		}
 
 		return $this->handle($provider);

@@ -16,10 +16,10 @@ class Google implements ProviderInterface{
 	/**
 	 * Constructor for Connect Library
 	 */
-	public function __construct($client, $scope, $state = 'default', $force = false)
+	public function __construct($client, $scope, $state = 'default')
 	{
 		$this->scopes = $scope;
-		$this->client = $this->prepareClient($client,$scope,$state,true);
+		$this->client = $this->prepareClient($client,$scope,$state);
 	}
 
 	/**
@@ -28,7 +28,7 @@ class Google implements ProviderInterface{
 	 * @return void
 	 * @author 
 	 **/
-	public function prepareClient($client, $scope, $state = 'default', $force = false)
+	public function prepareClient($client, $scope, $state = 'default')
 	{
 
 		$client = Config::get('connect::google.clients.'.$client);
@@ -53,9 +53,14 @@ class Google implements ProviderInterface{
 		$gClient->setClientSecret($client['client_secret']);
 		$gClient->setRedirectUri($client['redirect_uri']);
 
-		$gClient->setAccessType('offline');
+		
+		if(Config::get('connect::offline'))
+		{
+			$gClient->setAccessType('offline');
+		}
 
-		if($force)
+		
+		if(Config::get('connect::force'))
 		{
 			$gClient->setApprovalPrompt('force');
 		}
