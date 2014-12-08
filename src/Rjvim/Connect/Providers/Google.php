@@ -12,6 +12,7 @@ class Google implements ProviderInterface{
 
 	protected $client;
 	protected $scopes;
+	protected $sentry;
 
 	/**
 	 * Constructor for Connect Library
@@ -20,6 +21,8 @@ class Google implements ProviderInterface{
 	{
 		$this->scopes = $scope;
 		$this->client = $this->prepareClient($client,$scope,$state);
+
+		$this->sentry = \App::make('sentry');
 	}
 
 	/**

@@ -16,6 +16,7 @@ class Facebook implements ProviderInterface{
 
 	protected $client;
 	protected $scopes;
+	protected $sentry;
 
 	/**
 	 * Constructor for Connect Library
@@ -25,6 +26,8 @@ class Facebook implements ProviderInterface{
 		$this->scopes = $scope;
 
 		$this->client = $client;
+
+		$this->sentry = \App::make('sentry');
 
 		$config = Config::get('connect::facebook.clients.'.$client);
 
