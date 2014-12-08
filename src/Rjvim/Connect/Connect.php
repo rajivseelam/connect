@@ -101,6 +101,21 @@ class Connect {
 		return $this->handle($provider);
 
 	}
+	
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function facebook($client = 'default',$scope = 'default')
+	{
+		$provider = new Providers\Facebook($client,$scope);
+
+		return $this->handle($provider);
+
+	}
+
 
 	/**
 	 * Find user using sentry methods

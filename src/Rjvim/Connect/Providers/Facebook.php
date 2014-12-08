@@ -28,7 +28,6 @@ class Facebook implements ProviderInterface{
 
 		$config = Config::get('connect::facebook.clients.'.$client);
 
-
 		FacebookSession::setDefaultApplication($config['client_id'], $config['client_secret']);
 	}
 
@@ -128,13 +127,26 @@ class Facebook implements ProviderInterface{
 		      $session, 'GET', '/me'
 		    ))->execute()->getGraphObject(GraphUser::className());
 
+		    $user_image = (new FacebookRequest(
+		      $session, 'GET', '/me/picture',
+						  array (
+						    'redirect' => false,
+						    'height' => '200',
+						    'type' => 'normal',
+						    'width' => '200',
+						  )
+		    ))->execute()->getGraphObject()->asArray();
+
 		  } catch(FacebookRequestException $e) {
 
-		    echo "Exception occured, code: " . $e->getCode();
-		    echo " with message: " . $e->getMessage();
+		    dd('There was some error!');
 
 		  } 
+		  catch(FacebookSDKException $e) {
 
+		    dd('There was some error!');
+
+		  } 
 
 			$result['uid'] = $user_profile->getId();
 			$result['email'] = $user_profile->getEmail();
@@ -158,7 +170,14 @@ class Facebook implements ProviderInterface{
 
 			}
 
+			$result['username'] = $user_profile->getFirstName().' '.$user_profile->getLastName();
+
 			$result['access_token'] = $session->getLongLivedSession()->getToken();
+
+			if(!$user_image['is_silhouette'])
+			{
+				$result['image_url'] = $user_image['url'];
+			}
 
 			return $result;
 
@@ -174,6 +193,7 @@ class Facebook implements ProviderInterface{
 	 **/
 	public function updateOAuthAccount($user,$userData)
 	{	
+
 		$scope = $this->scopes;
 
 		$oauth = OAuthAccount::firstOrCreate(
@@ -186,6 +206,12 @@ class Facebook implements ProviderInterface{
 		$oauth->uid = $userData['uid'];
 		$oauth->location = $userData['location'];
 		$oauth->url = $userData['url'];
+		$oauth->username = $userData['username'];
+
+		if(isset($userData['image_url']))
+		{
+			$oauth->image_url = $userData['image_url'];
+		}
 
 		if(!is_array($scope))
 		{
@@ -201,8 +227,6 @@ class Facebook implements ProviderInterface{
 
 		}
 
-
-
 		$oauth->scopes = $scopes;
 
 		$oauth->save();
@@ -211,7 +235,7 @@ class Facebook implements ProviderInterface{
 
 	}
 
-		/**
+	/**
 	 * undocumented function
 	 *
 	 * @return void
