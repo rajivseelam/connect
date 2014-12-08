@@ -99,6 +99,7 @@ class Google implements ProviderInterface{
 		$result['email'] = $email;
 		$result['first_name'] = $person->getName()->getGivenName();
 		$result['last_name'] = $person->getName()->getFamilyName();
+		$result['username'] = $result['first_name'].' '.$result['last_name'];
 		$result['url'] = $person->getUrl();
 		$result['image'] = $person->getImage()->getUrl();
 
@@ -167,6 +168,7 @@ class Google implements ProviderInterface{
 		$oauth->image_url = $gUserData['image'];
 		$oauth->url = $gUserData['url'];
 		$oauth->uid = $gUserData['uid'];
+		$oauth->username = $gUserData['username'];
 
 		$oauth->access_token = $response->access_token;
 
