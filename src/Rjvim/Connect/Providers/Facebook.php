@@ -74,12 +74,11 @@ class Facebook implements ProviderInterface{
 	 **/
 	public function findUser($email)
 	{
-		$sentry = \App::make('sentry');
 
 		try
 		{
 
-			$user = $sentry->findUserByLogin($email);
+			$user = $this->sentry->findUserByLogin($email);
 
 			$result['found'] = true;
 			$result['user'] = $user;
@@ -152,7 +151,16 @@ class Facebook implements ProviderInterface{
 		  } 
 
 			$result['uid'] = $user_profile->getId();
-			$result['email'] = $user_profile->getEmail();
+
+			if($this->sentry->check())
+			{
+				$result['email'] = $this->sentry->getUser()->email;
+			}
+			else
+			{
+				$result['email'] = $user_profile->getEmail();
+			}
+			
 			$result['url'] = $user_profile->getLink();
 			$result['location'] = $user_profile->getLocation();
 

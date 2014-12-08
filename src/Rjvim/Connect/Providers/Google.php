@@ -99,7 +99,16 @@ class Google implements ProviderInterface{
 		}
 
 		$result['uid'] = $person->id;
-		$result['email'] = $email;
+
+		if($this->sentry->check())
+		{
+			$result['email'] = $this->sentry->getUser()->email;
+		}
+		else
+		{
+			$result['email'] = $email;
+		}
+			
 		$result['first_name'] = $person->getName()->getGivenName();
 		$result['last_name'] = $person->getName()->getFamilyName();
 		$result['username'] = $result['first_name'].' '.$result['last_name'];
