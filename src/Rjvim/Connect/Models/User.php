@@ -44,6 +44,19 @@ class User extends SentryUserModel{
 	}
 
 	/**
+	 * Get associated facebook oauth account
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function facebookAccount()
+	{
+		return $this->hasOne('Rjvim\Connect\Models\OAuthAccount')
+					->where('provider','facebook');
+	}
+
+
+	/**
 	 * Set morePermissions variable to that it can be used while getting merged permissions 
 	 *
 	 * @return void
