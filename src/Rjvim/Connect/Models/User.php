@@ -55,6 +55,19 @@ class User extends SentryUserModel{
 					->where('provider','facebook');
 	}
 
+	/**
+	 * Get associated google oauth account
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function youtubeAccounts()
+	{
+		return $this->hasMany('Rjvim\Connect\Models\OAuthAccount')
+					->where('provider','youtube');
+	}
+
+
 
 	/**
 	 * Set morePermissions variable to that it can be used while getting merged permissions 
