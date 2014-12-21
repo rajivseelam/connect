@@ -50,7 +50,11 @@ class Youtube extends Google{
 		$result['email'] = $this->sentry->getUser()->email;
 		$result['url'] = $person->getUrl();
 		$result['image'] = $person->getImage()->getUrl();
-		$result['channel'] = $this->getChannelId();
+		
+		$details = $this->getChannelDetails();
+
+		$result['channel'] = $details['channel_id'];
+		$result['username'] = $details['username'];
 
 		return $result;
 	}
@@ -82,6 +86,7 @@ class Youtube extends Google{
 		$oauth->url = $gUserData['url'];
 		$oauth->uid = $gUserData['uid'];
 		$oauth->channel = $gUserData['channel'];
+		$oauth->username = $gUserData['username'];
 
 		$oauth->access_token = $response->access_token;
 
@@ -126,16 +131,19 @@ class Youtube extends Google{
 	 * @return void
 	 * @author 
 	 **/
-	public function getChannelId($channelId = 'mine')
+	public function getChannelDetails($channelId = 'mine')
 	{
 		$youtube = new \Google_Service_YouTube($this->client);
 
 		$result = $youtube
 			->channels
 			->listChannels('contentDetails,snippet',array('mine' => true))
-			->getItems()[0]->getId();
+			->getItems()[0];
 
-		return $result;
+		$return['channel_id'] = $result->getId();
+		$return['username'] = $result->getSnippet()->title;
+
+		return $return;
 	}
 
 
