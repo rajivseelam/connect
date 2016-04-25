@@ -50,6 +50,8 @@ class Connect {
 		{
 			//If a user is not found, create a user and a oauth account for him
 			$user = $this->createUser($userData,true);
+
+			\Event::fire('oauth_account_created', array($user));
 		}
 
 		$provider->updateOAuthAccount($user,$userData);
